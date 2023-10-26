@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
 import com.example.kotlin_newsapi.api.NewsApiService
+import com.example.kotlin_newsapi.model.NewsData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -17,7 +18,7 @@ class MainActivity : AppCompatActivity() {
     private val retrofit by lazy{
         Retrofit.Builder()
             .baseUrl("https://newsapi.org/v2/")
-            .addConverterFactory(ScalarsConverterFactory.create())
+            .addConverterFactory(MoshiConverterFactory.create())
             .build()
     }
 
@@ -37,12 +38,21 @@ class MainActivity : AppCompatActivity() {
 
     private fun getNewsResponse() {
         val call = newsApiService.getNews("id", "e5455e7206a647859dcb57a918281d7a")
-        call.enqueue(object : Callback<String> {
-            override fun onResponse(call: Call<String>, response: Response<String>) {
-                apiResponseView.text = response.body()
+        call.enqueue(object : Callback<NewsData> {
+            override fun onResponse(call: Call<NewsData>, response: Response<NewsData>) {
+                if (response.isSuccessful) {
+                    val newsResponse = response.body()
+                    val articles = newsResponse?.articles
+                    val image = articles?.firstOrNull()?.urlToImage?: "No image"
+                    apiResponseView.text = image
+
+                    Log.d(TAG, "Response success: $articles")
+                } else {
+                    Log.e(TAG, "Response failed: ${response.errorBody().toString()}")
+                }
             }
 
-            override fun onFailure(call: Call<String>, t: Throwable) {
+            override fun onFailure(call: Call<NewsData>, t: Throwable) {
                 Log.e(TAG, "Failed to get response: ", t)
             }
         })

@@ -10,5 +10,5 @@ interface NewsApiService {
     fun getNews(
         @Query("country") query: String,
         @Query("apiKey") apiKey: String
-    ): Call<String>
+    ): Call<NewsData>
 }
