@@ -44,23 +44,20 @@ class MainActivity : AppCompatActivity() {
 
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-        newsAdapter.setData(
-            listOf(
-                Article("author1", "title1", "urlToImage1"),
-                Article("author2", "title2", "urlToImage2"),
-                Article("author3", "title3", "urlToImage3")
-            )
-        )
+        getNewsResponse()
     }
 
     private fun getNewsResponse() {
-        val call = newsApiService.getNews("id", "e5455e7206a647859dcb57a918281d7a")
+        val call = newsApiService.getNews("us", "e5455e7206a647859dcb57a918281d7a")
         call.enqueue(object : Callback<NewsData> {
             override fun onResponse(call: Call<NewsData>, response: Response<NewsData>) {
                 if (response.isSuccessful) {
                     val newsResponse = response.body()
                     val articles = newsResponse?.articles
-//                    val image = articles?.firstOrNull()?.urlToImage?: "No image"
+
+                    articles?.let {
+                        newsAdapter.setData(it)
+                    }
 
                     Log.d(TAG, "Response success: $articles")
                 } else {

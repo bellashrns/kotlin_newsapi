@@ -17,6 +17,9 @@ class NewsViewHolder(containerView: View, private val imageLoader: ImageLoader)
         fun bind(news: Article) {
             newsTitle.text = news.title
             newsAuthor.text = news.author
-            imageLoader.loadImage(news.urlToImage, newsImage)
+            val urlToImage = news.urlToImage
+            if (!urlToImage.isNullOrEmpty()) {
+                imageLoader.loadImage(news.urlToImage, newsImage)
+            }
         }
 }
