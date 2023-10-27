@@ -1,59 +1,82 @@
 package com.example.kotlin_newsapi
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.kotlin_newsapi.api.NewsApiService
+import com.example.kotlin_newsapi.model.NewsData
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [NewsList.newInstance] factory method to
- * create an instance of this fragment.
- */
 class NewsList : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+//    private val retrofit by lazy{
+//        Retrofit.Builder()
+//            .baseUrl("https://newsapi.org/v2/")
+//            .addConverterFactory(MoshiConverterFactory.create())
+//            .build()
+//    }
 
+//    private val newsApiService by lazy{
+//        retrofit.create(NewsApiService::class.java)
+//    }
+
+//    private val recyclerView: RecyclerView by lazy{
+//        requireView().findViewById<RecyclerView>(R.id.recycler_view)
+//    }
+
+//    private val newsAdapter by lazy {
+//        NewsAdapter(layoutInflater, GlideLoader(requireContext()))
+//    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_news_list, container, false)
+        val view = inflater.inflate(R.layout.fragment_news_list, container, false)
+
+//        recyclerView.adapter = newsAdapter
+//
+//        recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+//
+//        getNewsResponse()
+
+        return view
     }
 
+//    private fun getNewsResponse() {
+//        val call = newsApiService.getNews("us", "e5455e7206a647859dcb57a918281d7a")
+//        call.enqueue(object : Callback<NewsData> {
+//            override fun onResponse(call: Call<NewsData>, response: Response<NewsData>) {
+//                if (response.isSuccessful) {
+//                    val newsResponse = response.body()
+//                    val articles = newsResponse?.articles
+//
+//                    articles?.let {
+//                        newsAdapter.setData(it)
+//                    }
+//
+//                    Log.d(TAG, "Response success: $articles")
+//                } else {
+//                    Log.e(TAG, "Response failed: ${response.errorBody().toString()}")
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<NewsData>, t: Throwable) {
+//                Log.e(TAG, "Failed to get response: ", t)
+//            }
+//        })
+//    }
+
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment NewsList.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            NewsList().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        const val TAG = "NewsList"
     }
 }

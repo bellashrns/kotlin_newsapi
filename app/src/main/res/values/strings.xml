@@ -2,4 +2,11 @@
     <string name="app_name">kotlin_newsapi</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="news_tab">News</string>
+    <string name="profile_tab">Profile</string>
+    <string name="subtitle">News</string>
+    <string name="nameInput">Enter your name</string>
+    <string name="loginButton">LOGIN</string>
+    <string name="name_input_empty">Name cannot be empty</string>
+    <string name="name_result">Hello, %s</string>
 </resources>
