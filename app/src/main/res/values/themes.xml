@@ -6,4 +6,8 @@
     </style>
 
     <style name="Theme.Kotlin_newsapi" parent="Base.Theme.Kotlin_newsapi" />
+    <style name="profile_img" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
 </resources>
