@@ -10,4 +10,5 @@
     <string name="name_input_empty">Name cannot be empty</string>
     <string name="name_result">Hello, %s</string>
     <string name="name">Bella Saharani Sopyan</string>
+    <string name="logoutButton">Logout</string>
 </resources>
