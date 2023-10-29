@@ -1,5 +1,7 @@
 package com.example.kotlin_newsapi
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -9,6 +11,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlin_newsapi.api.NewsApiService
+import com.example.kotlin_newsapi.model.Article
 import com.example.kotlin_newsapi.model.NewsData
 import retrofit2.Call
 import retrofit2.Callback
@@ -50,6 +53,24 @@ class NewsList : Fragment() {
         recyclerView.adapter = newsAdapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         getNewsResponse()
+
+        newsAdapter.onItemClick = { article ->
+            navigateToNewsDetail(article)
+        }
+    }
+
+    @SuppressLint("ResourceType")
+    private fun navigateToNewsDetail(article: Article) {
+        val newsDetailFragment = NewsDetail()
+        val bundle = Bundle()
+        bundle.putParcelable("article", article) // Pass the selected article as a Parcelable
+        newsDetailFragment.arguments = bundle
+
+        // Replace the current fragment with NewsDetail
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.recycler_view, newsDetailFragment)
+            .addToBackStack(null)
+            .commit()
     }
 
     private fun getNewsResponse() {

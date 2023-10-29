@@ -21,38 +21,37 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 class HomeActivity : AppCompatActivity() {
+
+    private lateinit var name_result: MenuItem
+    private lateinit var logout: TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        val name = intent.getStringExtra(name)
-
-        val nameIntent = Intent(this, HomeActivity::class.java)
-        nameIntent.putExtra(Profile.name, name)
-        startActivity(nameIntent)
+        setSupportActionBar(findViewById(R.id.toolbar))
 
         setUpTabs()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
+
+        val name = intent.getStringExtra(name)
+        name_result = menu?.findItem(R.id.name_result)!!
+        name_result.title = getString(R.string.name_result, name)
+
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.getItemId()) {
-            R.id.name_result -> {
-                item.title = getString(R.string.name_result, name)
-                return true
-            }
+        return when (item.getItemId()) {
             R.id.logout -> {
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-                Log.d(TAG, "Logout")
+                finish()
                 return true
             }
+
+            else -> super.onOptionsItemSelected(item)
         }
-        return super.onOptionsItemSelected(item)
     }
 
     private fun setUpTabs() {
